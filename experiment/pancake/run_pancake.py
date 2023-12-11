@@ -72,12 +72,8 @@ def model_base_assemble(desired_goal, pancake_init_pos, num_timesteps=15):
 	print("Initial EE:", init_hand_pos)
 	target_pos = torch.Tensor(desired_goal)
 	print("Target Position:", target_pos)
-
 	if args.vis:
-		gui = nimble.NimbleGUI(world)
-		gui.serve(8080)
-		gui.nativeAPI().renderWorld(world)
-
+		gui = nimble.NimbleGUI(world, useBullet=True)
 	print(world.checkPenetration(True))
 	input()
 
@@ -120,8 +116,8 @@ def model_base_assemble(desired_goal, pancake_init_pos, num_timesteps=15):
 
 	torch.save(states, './data/pancake_lift_thin_nimble.pt')
 	if args.vis:
+		gui = nimble.NimbleGUI(world, useBullet=True)
 		gui.loopStates(states)
-		gui.blockWhileServing()
 		gui.stopServing()
 
 	# input()
