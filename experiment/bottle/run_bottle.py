@@ -96,9 +96,10 @@ def model_base_assemble(desired_goal, bottle_init_pos, num_timesteps=100):
 	print("Target Position:", pick_cap_pos)
 
 	if args.vis:
-		gui = nimble.NimbleGUI(world)
-		gui.serve(8060)
-		gui.nativeAPI().renderWorld(world)
+		gui = nimble.NimbleGUI(world, useBullet=True, videoLogFile='path/to.mp4')
+	# 	gui = nimble.NimbleGUI(world)
+	# 	gui.serve(8060)
+	# 	gui.nativeAPI().renderWorld(world)
 
 	print(world.checkPenetration(True))
 	input()
@@ -116,8 +117,8 @@ def model_base_assemble(desired_goal, bottle_init_pos, num_timesteps=100):
 			#print(state)
 			states.append(state.detach())
 			hand_poses.append(nimble.map_to_pos(world, ikMap, state).detach())
-		if args.vis:
-			gui.loopStates(states)
+		# if args.vis:
+		# 	gui.loopStates(states)
 		hand_pos = nimble.map_to_pos(world, ikMap, state)
 		# print(hand_pos)
 		#? hand_pos = [angle, position]
@@ -152,8 +153,8 @@ def model_base_assemble(desired_goal, bottle_init_pos, num_timesteps=100):
 	print("finish clip")
 	print(hand_pos)
 	print(state[12:15])
-	if args.vis:
-		gui.loopStates(states_total)
+	# if args.vis:
+	# 	gui.loopStates(states_total)
 
 	clip_state = state.detach()
 	finger_pose = state[7:9].detach()
@@ -176,8 +177,8 @@ def model_base_assemble(desired_goal, bottle_init_pos, num_timesteps=100):
 	
 
 			states.append(state.detach())
-		if args.vis:
-			gui.loopStates(states)
+		# if args.vis:
+		# 	gui.loopStates(states)
 		
 		# print(hand_pos)
 		#? hand_pos = [angle, position]
@@ -223,8 +224,8 @@ def model_base_assemble(desired_goal, bottle_init_pos, num_timesteps=100):
 	
 
 			states.append(state.detach())
-		if args.vis:
-			gui.loopStates(states)
+		# if args.vis:
+		# 	gui.loopStates(states)
 		
 		# print(hand_pos)
 		#? hand_pos = [angle, position]
@@ -258,7 +259,7 @@ def model_base_assemble(desired_goal, bottle_init_pos, num_timesteps=100):
 		states.append(state.detach())
 
 	if args.vis:
-		# gui = nimble.NimbleGUI(world, useBullet=True, videoLogFile='path/to.mp4')
+
 		# gui = nimble.NimbleGUI(world)
 		gui.loopStates(states_total)
 		gui.stopServing()
